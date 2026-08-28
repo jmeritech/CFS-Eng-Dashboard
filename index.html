@@ -64,28 +64,55 @@
     font-weight:700;padding:13px 16px;border-bottom:1px solid var(--line);background:#fafbfc;cursor:pointer;
     user-select:none;white-space:nowrap}
   thead th:hover{color:var(--cfs-blue)}
+  thead th.nosort{cursor:default}thead th.nosort:hover{color:var(--muted)}
   tbody td{padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:middle}
-  tbody tr:last-child td{border-bottom:none}tbody tr:hover{background:#f8fafc}
+  tbody tr.proj-row:hover{background:#f8fafc}
   .proj-name{font-weight:600}.proj-meta{font-size:12px;color:var(--muted);margin-top:2px}
+  .caret{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;
+    cursor:pointer;color:var(--muted);font-size:11px;transition:.15s;flex-shrink:0}
+  .caret:hover{background:#eef0f3;color:var(--ink)}
+  .caret.open{transform:rotate(90deg)}
+  .name-cell{display:flex;align-items:flex-start;gap:8px}
+  .subcount{display:inline-block;font-size:11px;font-weight:600;color:var(--muted);background:#f0f1f2;
+    border-radius:99px;padding:1px 7px;margin-left:6px;vertical-align:middle}
   .badge{display:inline-block;font-size:11px;font-weight:700;padding:4px 9px;border-radius:99px;
     text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
   .b-track{background:#e6f6ee;color:var(--ok)}.b-risk{background:#fdeaec;color:var(--cfs-red)}
   .b-done{background:#e8f1fa;color:var(--cfs-blue)}.b-hold{background:#f0f1f2;color:#5d6166}
   .prio{font-size:12px;font-weight:600}.prio.high{color:var(--cfs-red)}
   .prio.medium{color:var(--warn)}.prio.low{color:var(--muted)}
-  .pbar{height:7px;border-radius:99px;background:#eef0f3;overflow:hidden;width:120px}
+  .pbar{height:7px;border-radius:99px;background:#eef0f3;overflow:hidden;width:110px}
   .pbar>i{display:block;height:100%;border-radius:99px;background:var(--cfs-blue)}
   .pbar.full>i{background:var(--ok)}
   .pwrap{display:flex;align-items:center;gap:9px}
   .pwrap span{font-size:12px;font-weight:600;color:var(--muted);min-width:32px}
+  .auto-tag{font-size:10px;font-weight:700;color:var(--cfs-blue);background:#e8f1fa;border-radius:4px;padding:1px 5px;text-transform:uppercase;letter-spacing:.3px}
   .owner{display:flex;align-items:center;gap:8px}
   .avatar{width:26px;height:26px;border-radius:50%;background:var(--cfs-blue);color:#fff;font-size:11px;
     font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .due{font-size:13px}.due.over{color:var(--cfs-red);font-weight:600}.due.soon{color:var(--warn);font-weight:600}
   .row-actions{display:flex;gap:6px;opacity:0;transition:.15s}
-  tbody tr:hover .row-actions{opacity:1}
+  tbody tr.proj-row:hover .row-actions{opacity:1}
   .icon-btn{border:none;background:none;cursor:pointer;font-size:14px;color:var(--muted);padding:4px 6px;border-radius:6px}
   .icon-btn:hover{background:#eef0f3;color:var(--ink)}.icon-btn.del:hover{color:var(--cfs-red)}
+  /* sub-task drawer */
+  tr.sub-row>td{padding:0;border-bottom:1px solid var(--line);background:#fafbfc}
+  .sub-wrap{padding:6px 16px 14px 46px}
+  .sub-item{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px}
+  .sub-item:hover{background:#f0f2f5}
+  .sub-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--cfs-blue);cursor:pointer;flex-shrink:0}
+  .sub-item .stitle{flex:1;font-size:13px}
+  .sub-item.done .stitle{text-decoration:line-through;color:var(--muted)}
+  .sub-del{border:none;background:none;cursor:pointer;color:var(--muted);font-size:13px;padding:3px 6px;border-radius:6px;opacity:0}
+  .sub-item:hover .sub-del{opacity:1}.sub-del:hover{color:var(--cfs-red);background:#fdeaec}
+  .sub-add{display:flex;gap:8px;align-items:center;padding:8px 8px 2px}
+  .sub-add input{flex:1;font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:7px}
+  .sub-add input:focus{outline:2px solid var(--cfs-blue);outline-offset:-1px}
+  .sub-add button{font:inherit;font-size:12px;font-weight:600;padding:7px 12px;border-radius:7px;border:1px solid var(--cfs-blue);
+    background:var(--cfs-blue);color:#fff;cursor:pointer}
+  .sub-empty{font-size:12px;color:var(--muted);padding:6px 8px}
+  .sub-toggle{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);padding:4px 8px 0;cursor:pointer;user-select:none}
+  .sub-toggle input{accent-color:var(--cfs-blue);cursor:pointer}
   .empty{padding:50px 20px;text-align:center;color:var(--muted)}
   .empty h3{color:var(--ink);font-size:16px;margin-bottom:6px}
   .overlay{position:fixed;inset:0;background:rgba(20,28,38,.45);display:none;align-items:center;
@@ -101,8 +128,10 @@
   .field label{font-size:12px;font-weight:600;color:var(--muted)}
   .field input,.field select,.field textarea{font:inherit;font-size:14px;padding:9px 11px;
     border:1px solid var(--line);border-radius:8px;background:#fff}
+  .field input:disabled{background:#f0f1f2;color:var(--muted)}
   .field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--cfs-blue);outline-offset:-1px}
   .field textarea{resize:vertical;min-height:60px}
+  .field .hint{font-size:11px;color:var(--muted)}
   .modal .foot{padding:16px 22px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
   .status-msg{font-size:12px;color:var(--muted);margin-left:auto}
   .err{color:var(--cfs-red);font-size:12px;font-weight:600;min-height:16px}
@@ -137,7 +166,7 @@
     <input type="search" id="search" placeholder="Search projects, owners, tags…">
     <select id="statusFilter">
       <option value="">All statuses</option>
-      <option>On track</option><option>Behind</option><option>At risk</option><option>On hold</option><option>Complete</option>
+      <option>On track</option><option>At risk</option><option>On hold</option><option>Complete</option>
     </select>
     <select id="prioFilter">
       <option value="">All priorities</option>
@@ -155,7 +184,7 @@
         <th data-sort="priority" class="hide-sm">Priority</th>
         <th data-sort="owner" class="hide-sm">Owner</th>
         <th data-sort="due">Due</th>
-        <th style="width:60px"></th>
+        <th class="nosort" style="width:60px"></th>
       </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
@@ -192,10 +221,14 @@
       <div class="field full"><label>Project name</label><input id="f-name" placeholder="e.g. Lafferty foam injector redesign"></div>
       <div class="field"><label>Status</label><select id="f-status"><option>On track</option><option>At risk</option><option>On hold</option><option>Complete</option></select></div>
       <div class="field"><label>Priority</label><select id="f-priority"><option>High</option><option>Medium</option><option>Low</option></select></div>
-      <div class="field"><label>Progress (%)</label><input id="f-progress" type="number" min="0" max="100" value="0"></div>
+      <div class="field"><label>Progress (%)</label><input id="f-progress" type="number" min="0" max="100" value="0"><span class="hint" id="progHint"></span></div>
       <div class="field"><label>Owner</label><input id="f-owner" placeholder="e.g. Jordan Reyes"></div>
       <div class="field"><label>Due date</label><input id="f-due" type="date"></div>
       <div class="field"><label>Brand / Division</label><select id="f-tag"><option>Meritech</option><option>Lafferty</option><option>Knight</option><option>Shared</option></select></div>
+      <div class="field full" style="flex-direction:row;align-items:center;gap:8px">
+        <input id="f-autoprog" type="checkbox" style="width:16px;height:16px;accent-color:var(--cfs-blue)">
+        <label for="f-autoprog" style="cursor:pointer">Auto-calculate progress from sub-task checklist</label>
+      </div>
       <div class="field full"><label>Notes</label><textarea id="f-notes" placeholder="Current focus, blockers, next milestone…"></textarea></div>
     </div>
     <div class="foot">
@@ -206,7 +239,8 @@
 </div>
 
 <script>
-let sb=null, projects=[], editingId=null, canEdit=false, sortKey="due", sortDir=1;
+let sb=null, projects=[], subtasks={}, editingId=null, canEdit=false, sortKey="due", sortDir=1;
+let openRows=new Set();
 const $=s=>document.querySelector(s);
 const tbody=$("#tbody");
 
@@ -227,10 +261,23 @@ async function loadProjects(){
   if(!sb) return;
   const {data,error}=await sb.from("projects").select("*").order("due",{ascending:true});
   if(error){ showBanner("Couldn't load projects: "+error.message); return; }
-  projects=data||[]; render();
+  projects=data||[];
+  const {data:st,error:e2}=await sb.from("subtasks").select("*").order("id",{ascending:true});
+  if(e2){ showBanner("Couldn't load sub-tasks: "+e2.message); }
+  subtasks={};
+  (st||[]).forEach(s=>{ (subtasks[s.project_id]=subtasks[s.project_id]||[]).push(s); });
+  render();
 }
 
-/* ---------- helpers ---------- */
+/* ---------- progress helpers ---------- */
+function computedProgress(p){
+  if(!p.auto_progress) return +p.progress||0;
+  const list=subtasks[p.id]||[];
+  if(!list.length) return 0;
+  return Math.round(list.filter(s=>s.done).length/list.length*100);
+}
+
+/* ---------- misc helpers ---------- */
 function initials(n){ return (n||"?").split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase(); }
 function statusClass(s){ return {"On track":"b-track","At risk":"b-risk","Complete":"b-done","On hold":"b-hold"}[s]||"b-hold"; }
 function daysUntil(d){ if(!d) return null; return Math.round((new Date(d)-new Date().setHours(0,0,0,0))/864e5); }
@@ -251,7 +298,8 @@ function render(){
     return (!q||hay.includes(q))&&(!sf||p.status===sf)&&(!pf||p.priority===pf);
   });
   list.sort((a,b)=>{
-    let x=a[sortKey],y=b[sortKey]; if(sortKey==="progress"){x=+x;y=+y;}
+    let x=sortKey==="progress"?computedProgress(a):a[sortKey];
+    let y=sortKey==="progress"?computedProgress(b):b[sortKey];
     if(x==null)x=""; if(y==null)y="";
     if(x<y)return -sortDir; if(x>y)return sortDir; return 0;
   });
@@ -259,13 +307,19 @@ function render(){
   tbody.innerHTML="";
   $("#empty").style.display=list.length?"none":"block";
   for(const p of list){
-    const due=fmtDue(p.due), full=(+p.progress>=100), tr=document.createElement("tr");
+    const due=fmtDue(p.due), prog=computedProgress(p), full=(prog>=100);
+    const subs=subtasks[p.id]||[], isOpen=openRows.has(p.id);
+    const tr=document.createElement("tr");
+    tr.className="proj-row";
     tr.innerHTML=`
-      <td><div class="proj-name">${esc(p.name)}</div>
-        <div class="proj-meta">${esc(p.tag||"")}${p.notes?" · "+esc(p.notes.slice(0,52))+(p.notes.length>52?"…":""):""}</div></td>
+      <td><div class="name-cell">
+        <span class="caret ${isOpen?'open':''}" data-toggle="${p.id}">▶</span>
+        <div><div class="proj-name">${esc(p.name)}${subs.length?`<span class="subcount">${subs.filter(s=>s.done).length}/${subs.length}</span>`:""}</div>
+        <div class="proj-meta">${esc(p.tag||"")}${p.notes?" · "+esc(p.notes.slice(0,52))+(p.notes.length>52?"…":""):""}</div></div>
+      </div></td>
       <td><span class="badge ${statusClass(p.status)}">${esc(p.status)}</span></td>
-      <td><div class="pwrap"><div class="pbar ${full?'full':''}"><i style="width:${Math.min(100,Math.max(0,+p.progress||0))}%"></i></div>
-        <span>${+p.progress||0}%</span></div></td>
+      <td><div class="pwrap"><div class="pbar ${full?'full':''}"><i style="width:${Math.min(100,Math.max(0,prog))}%"></i></div>
+        <span>${prog}%</span>${p.auto_progress?' <span class="auto-tag">auto</span>':''}</div></td>
       <td class="hide-sm"><span class="prio ${(p.priority||'').toLowerCase()}">${esc(p.priority)}</span></td>
       <td class="hide-sm"><div class="owner"><div class="avatar">${initials(p.owner)}</div>${esc(p.owner||"—")}</div></td>
       <td><span class="due ${due.cls}">${due.txt}</span></td>
@@ -273,8 +327,31 @@ function render(){
         <button class="icon-btn" title="Edit" data-edit="${p.id}">✏️</button>
         <button class="icon-btn del" title="Delete" data-del="${p.id}">🗑️</button></div>`:""}</td>`;
     tbody.appendChild(tr);
+    if(isOpen) tbody.appendChild(subRow(p,subs));
   }
 }
+
+function subRow(p,subs){
+  const tr=document.createElement("tr");
+  tr.className="sub-row";
+  let items = subs.length
+    ? subs.map(s=>`<div class="sub-item ${s.done?'done':''}">
+        <input type="checkbox" ${s.done?'checked':''} ${canEdit?'':'disabled'} data-check="${s.id}">
+        <span class="stitle">${esc(s.title)}</span>
+        ${canEdit?`<button class="sub-del" title="Delete" data-subdel="${s.id}">🗑️</button>`:""}
+      </div>`).join("")
+    : `<div class="sub-empty">No sub-tasks yet.${canEdit?" Add the first one below.":""}</div>`;
+  const adder = canEdit ? `
+    <div class="sub-add">
+      <input type="text" placeholder="New sub-task…" data-subadd-input="${p.id}">
+      <button data-subadd="${p.id}">Add</button>
+    </div>
+    <label class="sub-toggle"><input type="checkbox" ${p.auto_progress?'checked':''} data-autoprog="${p.id}">
+      Auto-calculate this project's progress from the checklist</label>` : "";
+  tr.innerHTML=`<td colspan="7"><div class="sub-wrap">${items}${adder}</div></td>`;
+  return tr;
+}
+
 function renderKpis(){
   const c=s=>projects.filter(p=>p.status===s).length;
   $("#kpis").innerHTML=`
@@ -285,7 +362,7 @@ function renderKpis(){
     <div class="kpi done"><div class="num">${c("Complete")}</div><div class="lbl">Complete</div></div>`;
 }
 
-/* ---------- editing (password-gated) ---------- */
+/* ---------- editing gate ---------- */
 function setEditing(on){
   canEdit=on;
   $("#addBtn").disabled=!on;
@@ -305,7 +382,13 @@ $("#pw-ok").onclick=()=>{
 };
 $("#pw-input").addEventListener("keydown",e=>{ if(e.key==="Enter")$("#pw-ok").click(); });
 
-/* ---------- add/edit modal ---------- */
+/* ---------- add/edit project modal ---------- */
+function syncProgField(){
+  const auto=$("#f-autoprog").checked;
+  $("#f-progress").disabled=auto;
+  $("#progHint").textContent=auto?"Set automatically from sub-tasks":"";
+}
+$("#f-autoprog").onchange=syncProgField;
 function openModal(p){
   editingId=p?p.id:null;
   $("#modalTitle").textContent=p?"Edit project":"New project";
@@ -313,6 +396,7 @@ function openModal(p){
   $("#f-priority").value=p?.priority||"Medium"; $("#f-progress").value=p?.progress??0;
   $("#f-owner").value=p?.owner||""; $("#f-due").value=p?.due||"";
   $("#f-tag").value=p?.tag||"Meritech"; $("#f-notes").value=p?.notes||"";
+  $("#f-autoprog").checked=!!p?.auto_progress; syncProgField();
   $("#overlay").classList.add("show"); $("#f-name").focus();
 }
 function closeModal(){ $("#overlay").classList.remove("show"); }
@@ -324,7 +408,8 @@ async function saveFromModal(){
     name, status:$("#f-status").value, priority:$("#f-priority").value,
     progress:Math.min(100,Math.max(0,+$("#f-progress").value||0)),
     owner:$("#f-owner").value.trim(), due:$("#f-due").value||null,
-    tag:$("#f-tag").value, notes:$("#f-notes").value.trim()
+    tag:$("#f-tag").value, notes:$("#f-notes").value.trim(),
+    auto_progress:$("#f-autoprog").checked
   };
   $("#saveBtn").disabled=true; flash("Saving…");
   let error;
@@ -333,6 +418,32 @@ async function saveFromModal(){
   $("#saveBtn").disabled=false;
   if(error){ flash("Save failed: "+error.message); return; }
   closeModal(); flash("Saved ✓"); await loadProjects();
+}
+
+/* ---------- sub-task operations ---------- */
+async function addSubtask(projectId,input){
+  const title=input.value.trim(); if(!title) return;
+  input.disabled=true;
+  const {error}=await sb.from("subtasks").insert({project_id:projectId,title,done:false});
+  input.disabled=false;
+  if(error){ flash("Add failed: "+error.message); return; }
+  input.value=""; openRows.add(projectId); await loadProjects();
+  const again=document.querySelector(`[data-subadd-input="${projectId}"]`); if(again) again.focus();
+}
+async function toggleSubtask(id,done){
+  const {error}=await sb.from("subtasks").update({done}).eq("id",id);
+  if(error){ flash("Update failed: "+error.message); return; }
+  await loadProjects();
+}
+async function deleteSubtask(id){
+  const {error}=await sb.from("subtasks").delete().eq("id",id);
+  if(error){ flash("Delete failed: "+error.message); return; }
+  await loadProjects();
+}
+async function setAutoProgress(projectId,on){
+  const {error}=await sb.from("projects").update({auto_progress:on}).eq("id",projectId);
+  if(error){ flash("Update failed: "+error.message); return; }
+  await loadProjects();
 }
 
 /* ---------- events ---------- */
@@ -345,23 +456,40 @@ document.addEventListener("keydown",e=>{ if(e.key==="Escape"){closeModal();$("#p
 $("#search").oninput=render; $("#statusFilter").onchange=render; $("#prioFilter").onchange=render;
 
 tbody.addEventListener("click",async e=>{
-  const ed=e.target.dataset.edit, dl=e.target.dataset.del;
+  const t=e.target;
+  const tog=t.dataset.toggle;
+  if(tog){ const id=+tog; if(openRows.has(id))openRows.delete(id); else openRows.add(id); render(); return; }
+  const ed=t.dataset.edit, dl=t.dataset.del, subdel=t.dataset.subdel, subadd=t.dataset.subadd;
   if(ed) openModal(projects.find(p=>p.id==ed));
-  if(dl){
+  else if(dl){
     const p=projects.find(x=>x.id==dl);
-    if(confirm(`Delete "${p.name}"? This can't be undone.`)){
+    if(confirm(`Delete "${p.name}" and all its sub-tasks? This can't be undone.`)){
       const {error}=await sb.from("projects").delete().eq("id",dl);
       if(error){ flash("Delete failed: "+error.message); return; }
       flash("Deleted"); await loadProjects();
     }
   }
+  else if(subdel) deleteSubtask(+subdel);
+  else if(subadd) addSubtask(+subadd, document.querySelector(`[data-subadd-input="${subadd}"]`));
 });
+tbody.addEventListener("change",e=>{
+  const chk=e.target.dataset.check, auto=e.target.dataset.autoprog;
+  if(chk) toggleSubtask(+chk, e.target.checked);
+  else if(auto) setAutoProgress(+auto, e.target.checked);
+});
+tbody.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&e.target.dataset.subaddInput) addSubtask(+e.target.dataset.subaddInput, e.target);
+});
+
 document.querySelectorAll("thead th[data-sort]").forEach(th=>{
   th.onclick=()=>{ const k=th.dataset.sort; if(sortKey===k)sortDir*=-1; else {sortKey=k;sortDir=1;} render(); };
 });
 $("#exportBtn").onclick=()=>{
   const cols=["name","status","progress","priority","owner","due","tag","notes"];
-  const rows=[cols.join(",")].concat(projects.map(p=>cols.map(c=>`"${(p[c]??"").toString().replace(/"/g,'""')}"`).join(",")));
+  const rows=[cols.join(",")].concat(projects.map(p=>{
+    const r={...p,progress:computedProgress(p)};
+    return cols.map(c=>`"${(r[c]??"").toString().replace(/"/g,'""')}"`).join(",");
+  }));
   const a=document.createElement("a");
   a.href=URL.createObjectURL(new Blob([rows.join("\n")],{type:"text/csv"}));
   a.download="cfs-projects-"+new Date().toISOString().slice(0,10)+".csv"; a.click();
